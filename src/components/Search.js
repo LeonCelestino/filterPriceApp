@@ -18,21 +18,25 @@ export const Search = (props) => {
 
   const onPriceInputChange = (name, value) => {
     // TODO: implement price change handler
+    setPrice((price) => ({...price, [name]: value}))
   }
 
   const onCheckboxClick = (name, checked) => {
     // TODO: implement checkbox click handler
+    setColumns((columns) => ({...columns, [name]: !checked})); 
   }
-
-  const filterProducts = () => {
+  
+  const filterProducts = (filtredArr) => {
     // TODO: implement handler for filtering products by price range
-
-    
-
+    return filtredArr = (price.priceFrom === "" && price.priceTo === "") ? products : products.filter(product => product.price >=(price.priceFrom === "" ? 0 : parseFloat(price.priceFrom)) && product.price <= (price.priceTo === "" ? 50000 : parseFloat(price.priceTo)));
+    console.log(displayedProducts)
   }
-  let displayedProducts = products.map((products) => (JSON.parse(JSON.stringify(products))));
-  let productsPrice = products.map((products) => (products.price));
-  console.log(price)
+
+
+  let displayedProducts = filterProducts(products);
+ 
+
+  console.log(columns);
 
   return (
     <div className="Products">
@@ -42,11 +46,12 @@ export const Search = (props) => {
         priceTo={price.priceTo}
         onPriceInputChange={onPriceInputChange} />
       <ToggleColumns
-        onCheckboxClick={''}
-        columns={''} />
+        onCheckboxClick={onCheckboxClick}
+        columns={columns} />
 
       <ProductList
         products={displayedProducts}
+        filterProducts={filterProducts}
         columns={columns} />
     </div>
   );

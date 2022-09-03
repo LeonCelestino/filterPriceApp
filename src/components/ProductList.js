@@ -7,18 +7,29 @@ export const ProductList = (props) => {
   return (
     <div id="product-list">
       <header>
-        <strong>Product List (0 items)</strong>
+        <strong>Product List ({props.products.length})</strong>
       </header>
       <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Department</th>
-            <th>Price</th>
+            <th className={props.columns.id ? "" : "desappearing"}>ID</th>
+            <th className={props.columns.name ? "" : "desappearing"}>Name</th>
+            <th className={props.columns.department ? "" : "desappearing"}>Department</th>
+            <th className={props.columns.price ? "" : "desappearing"}>Price $</th>
           </tr>
+            
         </thead>
         <tbody>
+        {props.products.map((products) =>  
+              {return (
+                <tr key={products.id}>
+                  <td className={props.columns.id ? "" : "desappearing"}>{products.id}</td>
+                  <td className={props.columns.name ? "" : "desappearing"}>{products.name}</td>
+                  <td className={props.columns.department ? "" : "desappearing"}>{products.department}</td>
+                  <td className={props.columns.price ? "" : "desappearing"}>${products.price}</td>
+                </tr>
+              )}
+            )}
         </tbody>
       </table>
     </div>
